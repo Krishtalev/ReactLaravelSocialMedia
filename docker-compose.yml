@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+
+  backend:
+    build: backend
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      APP_DEBUG: 'true'
+      APP_KEY: 'base64:d1k91AgNcf1g7t/SVxBwE3u4NFK/I3vMH8Gyzl2Rvrs='
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: app
+      DB_USERNAME: postgres
+      DB_PASSWORD: password
+      WAIT_HOSTS: postgres:5432
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend:/app
+      - ./custom-php.ini:/usr/local/etc/php/conf.d/custom-php.ini
+
+  postgres:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password

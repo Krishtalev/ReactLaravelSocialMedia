@@ -1,0 +1,12 @@
+.app-wrapper {
+  margin: 0;
+  display: grid;
+  background: lightsteelblue;
+
+  grid-template-areas:
+  "homepageHeader homepageHeader"
+  "homepageFooter content";
+
+  grid-template-columns: 110px 1fr;
+  grid-template-rows: auto 300px;
+}

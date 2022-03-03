@@ -1,0 +1,7 @@
+.homepageNav{
+    padding-top: 10px;
+    text-align: center;
+    background: white;
+    border: 1px solid aqua;
+    grid-area: homepageFooter;
+}
