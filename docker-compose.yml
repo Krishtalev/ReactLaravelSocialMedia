@@ -1,6 +1,12 @@
 version: '3.8'
 
 services:
+  sample-prod:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - '1337:80'
 
   backend:
     build: backend
