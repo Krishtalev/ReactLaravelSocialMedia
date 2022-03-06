@@ -20,4 +20,4 @@ WORKDIR /app
 COPY --from=composer /app .
 CMD /wait \
     && ./artisan migrate --force --seed \
-    && php -S 0.0.0.0:80 -t public
+    && php:7.4-cli php -S localhost:80 -t public
