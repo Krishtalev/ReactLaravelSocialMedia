@@ -1,3 +1,8 @@
+.profile_posts{
+	background-color: #27343C;
+	padding-left: 10px;
+	padding-top: 24px;
+}
 .profile_post{
 	display: flex;
 }

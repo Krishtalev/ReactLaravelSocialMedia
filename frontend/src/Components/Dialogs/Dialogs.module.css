@@ -1,0 +1,26 @@
+.wrapper{
+	display: flex;
+}
+.dialogs{
+	padding-right: 50px;
+	border-right: 1px solid red;
+}
+.dialogs_li{
+	padding-bottom: 10px;
+}
+
+.mesages{
+	padding-left: 50px;
+}
+.message_item{
+	padding-bottom: 10px;
+	color: rgb(152, 156, 156);
+}
+
+.item{
+	color: white;
+	font-weight: 600;
+}
+.active{
+	color: rgba(86, 114, 235, 0.685);
+}

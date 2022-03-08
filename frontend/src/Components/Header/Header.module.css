@@ -1,8 +1,7 @@
 .homepageHeader{
-    background: cadetblue;
-    border: 1px solid aqua;
+    background: #27343C;
     border-bottom: 0px;
-    grid-area: homepageHeader;
+    grid-area: header;
 }
 
 .homepageHeader h1{

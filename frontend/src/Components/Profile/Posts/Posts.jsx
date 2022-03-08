@@ -1,7 +1,7 @@
 import p from "./Posts.module.css"
 import Post from "./Post";
 
-const Posts = () => {
+const Posts = (props) => {
 	return (
 		<div className={p.profile_posts}>
 			<div className={p.profile_title}>My posts</div>

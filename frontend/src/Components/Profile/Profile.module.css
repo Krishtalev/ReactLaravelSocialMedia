@@ -1,8 +1,12 @@
 .content{
 	grid-area: content;
-	margin-left: 5px;
+	height: 500px;
+	background-color: #1F2C34;
 }
 
+.profile_wrapper{
+	margin-left: 50px;
+}
 .back_img{
 	width: 100%;
 	height: 200px;
@@ -10,20 +14,36 @@
 .profile_info_wrapper{
 	display: flex;
 }
+.profile_img_wrapper{
+	margin-top: 14px;
+	margin-right: 14px;
+}
+
 .profile_img{
 	width: 150px;
-	margin-top: 5px;
-	margin-right: 5px;
+	height: 150px;
+	border-radius: 50%;
 }
 .profile_name{
 	font-size: 25px;
 }
+.hr{
+	border: 1px solid #3B464C;
+	margin-top: 17px;
+}
 .profile_additional{
-	margin-top: 10px;
+	margin-top: 17px;
 	display: flex;
 	border-radius: 2%;
 }
-.profile_additional_kind{
-	padding-right: 10px;
-	color: rgb(72, 73, 75);
+.profile_additional_key{
+	padding-right: 15px;
+	color: #B5B4B4;
+}
+
+.profile_info{
+	margin-top: 30px;
+}
+.key_item, .value_item{
+	padding-bottom: 10px;
 }
