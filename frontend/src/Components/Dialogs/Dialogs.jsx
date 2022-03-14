@@ -1,36 +1,27 @@
-import d from "./Dialogs.module.css"
-import {NavLink} from "react-router-dom";
-
-const activeLink = ({isActive}) => isActive ? d.active : d.item; 
+import style from "./Dialogs.module.css"
+import barbieImg from "../../Images/pngwing.png";
+import Dialog from "./Dialog/Dialog";
 
 const Dialogs = (props) => {
+
+	let dialogItems = [
+		{src:barbieImg,"id": 1, name:"Ivan"},
+		{src:barbieImg,"id": 2, name:"Animechniki"}
+	]
+
 	return (
-		<div>
-			{props.text}
-			<div className={d.wrapper}>
-				<div className={d.dialogs}>
-					<ul className={d.dialogs_ul}>
-						<li className={d.dialogs_li}>
-							<NavLink to="/dialogs" className ={activeLink}>Andrey</NavLink>
-						</li>
-						<li className={d.dialogs_li}>
-							<NavLink to="/dialogs" className ={activeLink}>Dmitry</NavLink>
-						</li>
-						<li className={d.dialogs_li}>
-							<NavLink to="/dialogs" className ={activeLink}>Sasha</NavLink>
-						</li>
-						<li className={d.dialogs_li}>
-							<NavLink to="/dialogs" className ={activeLink}>Sveta</NavLink>
-						</li>
-					</ul>
-				</div>
-				<div className={d.mesages}>
-					<div className={d.message_item}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, a?</div>
-					<div className={d.message_item}>Lorem ipsum dolor sit amet.</div>
-					<div className={d.message_item}>Lorem.</div>
-					<div className={d.message_item}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo tenetur labore iusto, aut excepturi nulla?</div>
-					<div className={d.message_item}>Lorem ipsum dolor sit.</div>
-				</div>
+		<div className={style.wrapper}>
+			<img className={style.back_img}
+				 src="https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg" alt="back-img"/>
+			<div className={style.dialogs}>
+				<Dialog
+					src={barbieImg}
+					id="1"
+					name="Ivan"/>
+				<Dialog
+					src={barbieImg}
+					id="2"
+					name="Animechniki"/>
 			</div>
 		</div>
 	)

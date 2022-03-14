@@ -1,0 +1,39 @@
+.newPost{
+    margin:1% 1%;
+}
+
+.postForm{
+    width: 500px;
+    height: 50px;
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    padding:2px;
+    background:#323944;
+    border:1px solid #323944;
+    border-radius: 15px;
+}
+
+.postText{
+    background: #323944;
+    color: white;
+    padding-left: 20px;
+    width: 320px;
+    flex: auto;
+    border:none;
+}
+
+.postText:focus{
+    outline: none;
+}
+
+.submitButton{
+    vertical-align: center;
+    border:1px solid #466089;
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 30px;
+    border-radius: 8px;
+    background:#466089;
+    color:white;
+}

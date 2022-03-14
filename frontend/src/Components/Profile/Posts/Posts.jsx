@@ -1,18 +1,23 @@
 import p from "./Posts.module.css"
 import Post from "./Post";
+import PostForm from "./PostForm/PostForm";
 
 const Posts = (props) => {
-	return (
-		<div className={p.profile_posts}>
-			<div className={p.profile_title}>My posts</div>
-			<div className={p.profile_new_post}>
-				New post
-			</div>
-			<Post text="lalallalalala"/>
-			<Post text="pmupumpumpumu"/>
-			<Post text="blbla"/>
-		</div>
-	)
+    const getPosts = () => {
+        return [
+            {"id": 1, "text": "putin"},
+            {"id": 2, "text": "hello"},
+        ]
+    }
+    let posts = getPosts().map((element, i) => <Post text={element["text"]}/>)
+
+    return (
+        <div className={p.profile_posts}>
+            <div className={p.profile_title}>My posts</div>
+            <PostForm/>
+            {posts}
+        </div>
+    )
 }
 
 export default Posts;
