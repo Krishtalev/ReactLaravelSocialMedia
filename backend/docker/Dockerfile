@@ -12,12 +12,12 @@ RUN apt-get update && \
     apt-get install -y libpq-dev && \
     docker-php-ext-install pdo pdo_pgsql pgsql
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer require doctrine/dbal
+#RUN composer require doctrine/dbal:3.3.3
+RUN composer require beyondcode/laravel-websockets:2.x-dev --with-all-dependencies
 #RUN apt-get install php7.0-pgsql
 WORKDIR /var/www/api1
 ADD . /var/www/api1
 
 RUN chown -R www-data:www-data /var/www/api1/storage
-RUN chmod 755 /var/www/api1/storage
-
-CMD ./var/www/api1/artisan migrate --force --seed
+RUN chmod -R 775 /var/www/api1/storage
+#CMD ./var/www/api1/artisan migrate --force --seed

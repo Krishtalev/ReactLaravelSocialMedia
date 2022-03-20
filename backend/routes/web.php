@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+
 header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length');
 header('Access-Control-Allow-Origin: *');
@@ -21,13 +21,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/api', function () {
-    $js = json_encode('Hello World');
-    return response($js, 200);
-});
+Route::get('/test', function () {
+    $table = "permission_roles";
+    return DB::getSchemaBuilder()->getColumnListing($table);
+})->name('test');
 
-Route::get('/lala', function () {
-	$table = "posts";
-	return DB::getSchemaBuilder()->getColumnListing($table);
-	//return Schema::hasTable('users');
-});
+

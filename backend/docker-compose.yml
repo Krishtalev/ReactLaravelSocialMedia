@@ -23,8 +23,20 @@ services:
             - ./:/var/www/api1
         ports:
             - "9000:9000"
+        depends_on:
+            - postgres
         links:
             - postgres
+        environment:
+            APP_DEBUG: 'true'
+            APP_KEY: 'base64:d1k91AgNcf1g7t/SVxBwE3u4NFK/I3vMH8Gyzl2Rvrs='
+            DB_CONNECTION: pgsql
+            DB_HOST: postgres
+            DB_PORT: 5432
+            DB_DATABASE: postgres
+            DB_USERNAME: postgres
+            DB_PASSWORD: postgres
+            WAIT_HOSTS: postgres:5432
 
     postgres:
         container_name: postgres
@@ -33,4 +45,16 @@ services:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
             - POSTGRES_DB=postgres
-            - 5432:5432
+
+    pgadmin:
+        container_name: pgadmin_container
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+            PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+            PGADMIN_CONFIG_SERVER_MODE: 'False'
+        volumes:
+            - ./.pgadmin:/root/.pgadmin
+        ports:
+            - ${PGADMIN_PORT:-5050}:80
+        restart: unless-stopped
