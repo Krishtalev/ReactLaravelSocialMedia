@@ -27,7 +27,7 @@ Route::get('/api', function () {
 });
 
 Route::get('/lala', function () {
-	$table = "permission_roles";
+	$table = "posts";
 	return DB::getSchemaBuilder()->getColumnListing($table);
 	//return Schema::hasTable('users');
 });

@@ -11,12 +11,11 @@ class CreatePermissionRolesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up()	//отвечает за внесение изменений в бд
     {
-        Schema::create('permission_roles', function (Blueprint $table) {
+        Schema::create('permission_roles', function (Blueprint $table) {	//для создания таблицы и полей в ней
             $table->id();
-            $table->string('name', 50);
-            $table->integer('age');
+            $table->string('name', 10);		//у стринга ограничение 255 вроде
             $table->timestamps();
         });
     }
@@ -26,7 +25,7 @@ class CreatePermissionRolesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down()		//используется при откате
     {
         Schema::dropIfExists('permission_roles');
     }
