@@ -20,3 +20,4 @@ ADD . /var/www/api1
 RUN chown -R www-data:www-data /var/www/api1/storage
 RUN chmod 755 /var/www/api1/storage
 
+CMD ./var/www/api1/artisan migrate --force --seed
