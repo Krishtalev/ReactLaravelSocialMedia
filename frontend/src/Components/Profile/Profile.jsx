@@ -2,7 +2,7 @@ import Posts from "./Posts/Posts";
 import p from "./Profile.module.css"
 import ProfileInfo from "./ProfileInfo";
 
-const Profile = () => {
+const Profile = (props) => {
     const request = new Request("http://localhost:8080/api", {
         method: "get",
         headers: {
@@ -31,7 +31,7 @@ const Profile = () => {
                     </div>
                 </div>
             </section>
-            <Posts/>
+            <Posts posts={props.posts}/>
         </div>
     )
 }
