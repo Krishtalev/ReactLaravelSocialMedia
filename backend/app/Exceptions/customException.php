@@ -1,14 +1,14 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Exceptions;
 
 use Exception;
 use App\Responses\ApiResponses;
 use Illuminate\Http\Response;
-use JetBrains\PhpStorm\Pure;
 
-
-class customException extends Exception
+class CustomException extends Exception
 {
     private array|string $errors;
     private int $status;

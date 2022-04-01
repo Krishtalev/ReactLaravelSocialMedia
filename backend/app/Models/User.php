@@ -2,43 +2,100 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Auth;
+use App\Exceptions\CustomException;
+use App\Validator\CustomValidator;
+use App\ValidationRules\UserRules;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Http\Request;
+use Laravel\Lumen\Auth\Authorizable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+
+class User extends BaseModel implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use Authenticatable, Authorizable, hasFactory;
+    use UserRules;
+
+    /**
+     * @param Request $request
+     * @return User
+     * @throws \Illuminate\Validation\ValidationException
+     * @throws \Throwable
+     */
+    public static function register(Request $request): User
+    {
+        $validator = new CustomValidator($request->post(), UserRules::$registerRules, UserRules::$customMessages);
+        $attributes = $validator->validated();
+
+        $attributes['password'] = app('hash')->make($attributes['password']);
+        return User::create($attributes);
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     * @throws \Illuminate\Validation\ValidationException
+     * @throws \Throwable
+     */
+    public static function login(Request $request): array
+    {
+        $validator = new CustomValidator($request->post(), UserRules::$loginRules, UserRules::$customMessages);
+        $credentials = $validator->validated();
+
+        Auth::factory()->setTTL(3600);
+        throw_if(!$token = Auth::attempt($credentials), new CustomException('Wrong',401));
+
+        return [
+            'token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => Auth::factory()->getTTL() * 60
+        ];
+    }
+
+    public function cities()
+    {
+        return $this->belongsToMany(City::class, "city_user");
+    }
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name', 'email', 'password'
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * The attributes excluded from the model's JSON form.
      *
-     * @var array<int, string>
+     * @var array
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the identifier that will be stored in the subject claim of the JWT.
      *
-     * @var array<string, string>
+     * @return mixed
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }

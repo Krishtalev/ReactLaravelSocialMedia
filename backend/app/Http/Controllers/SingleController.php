@@ -10,10 +10,10 @@ use Illuminate\Http\Response;
 
 class SingleController extends Controller
 {
-    public function __invoke(string $model, string $method, Request $request): Response
+    public function handle(string $model, string $methodName, Request $request, ?int $id = null): Response
     {
-
-
-        return ApiResponses::successResponse([$model],$method,200);
+        $modelClass = "\App\Models\\$model";
+        $data = $modelClass::$methodName($request, $id) ?? null;
+        return ApiResponses::successResponse($data, $methodName, 200);
     }
 }
