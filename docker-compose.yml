@@ -1,48 +1,87 @@
-version: "3.7"
+version: '3.8'
+volumes:
+  postgres: {}
+  public-storage: {}
+
+x-backend: &backend
+  build: ./backend
+  restart: unless-stopped
+  volumes:
+      - public-storage:/app/storage/app/public
+  depends_on:
+    - postgres
+  environment:
+    APP_DEBUG: 'true'
+    APP_KEY: 'base64:d1k91AgNcf1g7t/SVxBwE3u4NFK/I3vMH8Gyzl2Rvrs='
+    DB_CONNECTION: pgsql
+    DB_HOST: postgres
+    DB_PORT: 5432
+    DB_DATABASE: app
+    DB_USERNAME: postgres
+    DB_PASSWORD: password
+    WAIT_HOSTS: postgres:5432
+    JWT_SECRET: gzBRkDUp5jBzJ2xUirx2iJjFXY5lVZ55XPTTaFKh0y5gOEYQuvBu47ujG4n86J5K
+    OPENWEATHER_KEY: 901b1c1bced392e85661c05e6f162108
+
 services:
-  frontend:
-    build:
-      context: frontend
-      dockerfile: Dockerfile
-    volumes:
-      - ./frontend:/var/www/api1
-      - /app/node_modules
-    ports:
-      - "3000:3000"
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-
-  nginx:
-    container_name: nginx
-    image: nginx
-    ports:
-      - "8080:80"
-    links:
-      - php
-    depends_on:
-      - php
-      - postgres
-    volumes:
-      - ./backend:/var/www/api1
-      - ./backend/nginx/default.conf:/etc/nginx/conf.d/default.conf
-
-  php:
-    build:
-      context: backend
-      dockerfile: docker/Dockerfile
-    container_name: php_fpm
-    volumes:
-      - ./backend:/var/www/api1
-    ports:
-      - "9000:9000"
-    links:
-      - postgres
+  backend:
+    <<: *backend
+  # backend-scheduler:
+  #   <<: *backend
+  #   restart: on-failure
+  #   command: sh -c "/wait && php artisan publishCommand"
 
   postgres:
-    container_name: postgres
     image: postgres
+    restart: unless-stopped
+    volumes:
+      - postgres:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
-      - 5432:5432
+      POSTGRES_DB: app
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+
+  centrifugo:
+    image: centrifugo/centrifugo:v3
+    restart: always
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    environment:
+      CENTRIFUGO_TOKEN_HMAC_SECRET_KEY: secret
+      CENTRIFUGO_ADMIN_PASSWORD: admin_password
+      CENTRIFUGO_API_KEY: api_key
+      CENTRIFUGO_ADMIN_SECRET: admin_secret
+      CENTRIFUGO_WEB: 1
+      CENTRIFUGO_ADMIN: 1
+      CENTRIFUGO_CONNECTION_LIFETIME: 0
+      CENTRIFUGO_WATCH: 0
+      CENTRIFUGO_CLIENT_INSECURE: 0
+      CENTRIFUGO_ADMIN_INSECURE: 0
+      CENTRIFUGO_API_INSECURE: 0
+      CENTRIFUGO_PUBLISH: 1
+      CENTRIFUGO_PRESENCE: 0
+      CENTRIFUGO_JOIN_LEAVE: 0
+      CENTRIFUGO_HISTORY_SIZE: 10
+      CENTRIFUGO_HISTORY_TTL: 300s
+      CENTRIFUGO_HISTORY_RECOVER: 1
+      CENTRIFUGO_ANONYMOUS: 0
+      CENTRIFUGO_ALLOWED_ORIGINS: '*'
+
+  proxy:
+    build: proxy
+    restart: unless-stopped
+    environment:
+      WAIT_HOSTS: backend:80,frontend:80
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - "8300:80"
+
+  frontend:
+    build: frontend
+
+
+    restart: unless-stopped
