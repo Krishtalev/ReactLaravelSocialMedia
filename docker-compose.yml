@@ -7,6 +7,7 @@ x-backend: &backend
   build: ./backend
   restart: unless-stopped
   volumes:
+      - ./backend:/app
       - public-storage:/app/storage/app/public
   depends_on:
     - postgres
@@ -68,6 +69,8 @@ services:
       CENTRIFUGO_HISTORY_RECOVER: 1
       CENTRIFUGO_ANONYMOUS: 0
       CENTRIFUGO_ALLOWED_ORIGINS: '*'
+    ports:
+      - "8000:8000"
 
   proxy:
     build: proxy
@@ -82,6 +85,4 @@ services:
 
   frontend:
     build: frontend
-
-
     restart: unless-stopped
