@@ -1,0 +1,23 @@
+.dialogs_li{
+	padding-bottom: 10px;
+}
+.dialogItem{
+	display: flex;
+	align-items: center;
+}
+.dialogItem img{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+.item{
+	color: white;
+	font-weight: 600;
+	font-size: 14px;
+}
+.active{
+	color: #3FE3ED;
+	font-size: 14px;
+}

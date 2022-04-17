@@ -1,20 +1,108 @@
+.wrapper{
+	display: flex;
+	width: 800px;
+	height: 90vh;
+}
+.dialogs{
+	padding-right: 10px;
+	background-color: #151B1F;
+	height: 500px;
+	width: 400px;
+	padding-left: 10px;
+}
+.dialogs_ul{
+	list-style: none;
+	overflow-y: scroll;
+	height: 70vh;
+}
+.search{
+	display: block;
+	margin-bottom: 5px;
+	background-color: #323944;
+	border: none;
+	width: 200px;
+	border-radius: 14px;
+	color: white;
+	padding: 5px;
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 14px;
+}
+.search::placeholder{
+	font-size: 14px;
+	padding-left: 10px;
+}
+
 .messages{
 	padding-left: 50px;
+	height: 80vh;
+	overflow-y: scroll;
+	margin-top: 10px;
 }
-.message_item{
-	padding-bottom: 10px;
-	color: rgb(152, 156, 156);
-}
-
-.item{
-	color: white;
-	font-weight: 600;
-}
-.active{
-	color: rgba(86, 114, 235, 0.685);
+.messageWrapper{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	background-color: #1F2C34;
+	max-height: 500px;
 }
 
-.back_img{
+.messageHeader{
+	height: 80px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.messageHeader img{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	margin-right: 5px;
+}
+.dialogName{
+	margin-left: 5px;
+}
+.hr{
+	border: 1px solid #3B464C;
+}
+
+.sendMessage{
+	margin-bottom: 10px;
+	display: flex;
+	background-color: #323944;
+	border: none;
+	width: 600px;
+	border-radius: 14px;
+	margin-top: 20px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.sendMessage textarea{
+	display: block;
+	margin-bottom: 5px;
+	background-color: #323944;
+	border: none;
 	width: 100%;
-	height: 100px;
+	border-radius: 14px;
+	resize: vertical;
+	min-height: 50px;
+	color: white;
+	padding: 5px;
 }
+.sendMessage textarea::placeholder{
+	padding-left: 10px;
+}
+.bSend{
+	border:1px solid #466089;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 12px;
+    height: 30px;
+    border-radius: 8px;
+    background:#466089;
+    color:white;
+	cursor: pointer;
+}
+
+

@@ -31,7 +31,11 @@ const Profile = (props) => {
                     </div>
                 </div>
             </section>
-            <Posts posts={props.posts}/>
+            <Posts 
+				postData={props.profilePage.postData} 
+				dispatch={props.dispatch}
+				newPostValue={props.profilePage.newPostValue}
+			/>
         </div>
     )
 }

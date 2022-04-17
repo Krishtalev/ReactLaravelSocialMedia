@@ -1,12 +1,79 @@
 .profile_posts{
-	background-color: #27343C;
-	padding-left: 10px;
-	padding-top: 24px;
+	display: flex;
+	justify-content: center;
+}
+
+.profile_title{
+	color: #E4E6EBFF;
+	font-weight: 700;
+	margin-bottom: 10px;
 }
 .profile_post{
-	display: flex;
+	margin-bottom: 5px;
+	padding: 5px;
+	border-radius: 10px;
+	background-color: #323944;
+	max-width: 500px;
 }
 .profile_post img{
 	width: 50px;
 	border-radius: 30px;
 }
+.post_wrapper{
+	display: flex;
+	flex-direction: column;
+}
+.post_text{
+	margin: 5px;
+	color: #E4E6EBFF;
+}
+.profile_new_post{
+	margin-bottom: 10px;
+	display: flex;
+	background-color: #323944;
+	border: none;
+	width: 500px;
+	border-radius: 14px;
+	margin-top: 20px;
+}
+.profile_new_post textarea{
+	display: block;
+	margin-bottom: 5px;
+	background-color: #323944;
+	border: none;
+	width: 500px;
+	border-radius: 14px;
+	resize: vertical;
+	min-height: 50px;
+	color: white;
+	padding: 5px;
+}
+.profile_new_post textarea::placeholder {
+	padding: 10px;
+}
+.bPublish{
+    border:1px solid #466089;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 12px;
+    height: 30px;
+    border-radius: 8px;
+    background:#466089;
+    color:white;
+	cursor: pointer;
+}
+.likesCount{
+	color: #E4E6EBFF;
+}
+
+.author{
+	display: flex;
+	align-items: center;
+}
+.authorName{
+	margin-left: 10px;
+	font-size: 18px;
+	font-weight: 400;
+	color: #FFFDFD;
+}
+

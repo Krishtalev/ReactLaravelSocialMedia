@@ -1,15 +1,46 @@
-import style from "./Dialogs.module.css"
-import Dialog from "./Dialog/Dialog";
+import d from "./Dialogs.module.css"
+import DialogItem from "./DialogItem/DialogItem";
+import MessageItem from "./MessageItem/MessageItem";
+import React from "react";
+import { addMessageActionCreator, onMessageChangeActionCreator } from "../../redux/reducers/dialogs-reducer";
+import barbieImg from "../../Images/pngwing.png";
 
 const Dialogs = (props) => {
-	let dialogsItem = props.dialogsData.map(el => <Dialog src={el.src} id={el.id} name={el.name} />)
+	let dialogsItem = props.dialogPage.dialogsData.map(el => <DialogItem id={el.id} name={el.name} src={el.src}/>)
+	let messageItem = props.dialogPage.messageData.map(el => <MessageItem message={el.message}/>)
+	let newMessageValue = props.dialogPage.newMessageValue;
+
+	let addMessage = () => {
+		props.dispatch(addMessageActionCreator());
+	}
+	let onMessageChange = (event) => {
+		let text = event.target.value;
+		props.dispatch(onMessageChangeActionCreator(text));
+	}
 
 	return (
-		<div className={style.wrapper}>
-			<img className={style.back_img}
-				 src="https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg" alt="back-img"/>
-			<div className={style.dialogs}>
-				{dialogsItem}
+		<div className={d.wrapper}>
+			<div className={d.dialogs}>
+				<input className={d.search} placeholder="Search..."/>
+				<ul className={d.dialogs_ul}>
+					{dialogsItem}
+				</ul>
+			</div>
+			<div className={d.messageWrapper}>
+				<div className={d.messageHeader}>
+					<div className={d.dialogName}>DialogName</div>
+					<img src={barbieImg} alt="" />
+				</div> 
+				<div className={d.hr}></div>
+				<div className={d.messages}>
+					{messageItem}
+				</div>
+				<div className={d.sendMessage}>
+					<textarea onChange={onMessageChange} value={newMessageValue} 
+						placeholder="Write a message...">
+					</textarea>
+					<button className={d.bSend} onClick={addMessage}>Send</button>
+				</div>
 			</div>
 		</div>
 	)
