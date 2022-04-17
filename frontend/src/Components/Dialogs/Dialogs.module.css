@@ -13,7 +13,7 @@
 .dialogs_ul{
 	list-style: none;
 	overflow-y: scroll;
-	height: 70vh;
+	height: 430px;
 }
 .search{
 	display: block;
