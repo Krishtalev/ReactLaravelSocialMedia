@@ -31,7 +31,8 @@ class ExistenceMiddleware
         throw_if(!class_exists("\App\Models\\$modelName"), new CustomException("Model does not exist", 404));
         $modelClass = "\App\Models\\$modelName";
 
-        $classRules = $modelClass::getMethods();
+        $classInstance = new $modelClass();
+        $classRules = $classInstance->getMethods();
         throw_if(!in_array($methodName,array_keys($classRules)), new CustomException("Method does not exist", 404));
 
         $methodType = $classRules[$methodName]['type'];

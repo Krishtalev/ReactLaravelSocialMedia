@@ -20,6 +20,14 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     use Authenticatable, Authorizable, hasFactory;
     use UserRules;
 
+    public array $methods = [
+    ];
+
+
+    public function addFriend() {
+        $currentUser = Auth::user();
+    }
+
     /**
      * @param Request $request
      * @return User
@@ -48,7 +56,6 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
 
         Auth::factory()->setTTL(3600);
         throw_if(!$token = Auth::attempt($credentials), new CustomException('Wrong',401));
-
         return [
             'token' => $token,
             'token_type' => 'bearer',
@@ -56,9 +63,21 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
         ];
     }
 
-    public function cities()
+
+    public function userPosts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsToMany(City::class, "city_user");
+        return $this->hasMany(Post::class);
+
+    }
+
+    public function friends()
+    {
+        return $this->hasManyThrough();
+    }
+
+    public function dialogs()
+    {
+        return $this->hasManyThrough();
     }
 
     /**
@@ -67,7 +86,7 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password'
+        'name', 'email', 'password', "age", "site", "education"
     ];
 
     /**

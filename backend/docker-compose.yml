@@ -20,10 +20,10 @@ x-backend: &backend
 services:
   backend:
     <<: *backend
-  backend-scheduler:
-    <<: *backend
-    restart: on-failure
-    command: sh -c "/wait && php artisan publishCommand"
+#  backend-scheduler:
+#    <<: *backend
+#    restart: on-failure
+#    command: sh -c "/wait && php artisan publishCommand"
 
   postgres:
     image: postgres

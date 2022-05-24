@@ -6,8 +6,9 @@ WORKDIR /app
 COPY composer.json .
 COPY composer.lock .
 RUN composer install --no-interaction --no-progress --no-autoloader --dev --ignore-platform-reqs
+#RUN composer update --no-scripts
 COPY . .
-RUN composer dump-autoload
+
 
 FROM php:8.1-fpm
 RUN echo "UTC" > /etc/timezone

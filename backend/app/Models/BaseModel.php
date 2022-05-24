@@ -12,15 +12,15 @@ abstract class BaseModel extends Model
 {
     use HasFactory;
 
-    public static array $methods;
+    public array $methods;
 
-    public static function getMethods(){
-        return static::$methods;
+    public function getMethods(){
+        return $this->methods;
     }
 
-    public static function getAll(Request $request): array
+    public static function getAll()
     {
-        return static::all()->toArray();
+        return static::all();
     }
 
     public static function getOne(Request $request, ?int $id)
