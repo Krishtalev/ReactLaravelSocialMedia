@@ -1,23 +1,8 @@
-import Posts from "./Posts/Posts";
+import PostsContainer from "./Posts/PostsContainer";
 import p from "./Profile.module.css"
 import ProfileInfo from "./ProfileInfo";
 
 const Profile = (props) => {
-    const request = new Request("http://localhost:8080/api", {
-        method: "get",
-        headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json"
-        }
-    });
-
-    fetch(request)
-        .then(res => {
-            if (res.status === 200) {
-                console.log("yey jojo")
-            }
-        })
-
     return (
         <div>
             <section className={p.content}>
@@ -28,14 +13,10 @@ const Profile = (props) => {
                 <div className={p.profile_wrapper}>
                     <div className={p.profile}>
                         <ProfileInfo/>
+						<PostsContainer store={props.store} />
                     </div>
                 </div>
             </section>
-            <Posts 
-				postData={props.profilePage.postData} 
-				dispatch={props.dispatch}
-				newPostValue={props.profilePage.newPostValue}
-			/>
         </div>
     )
 }

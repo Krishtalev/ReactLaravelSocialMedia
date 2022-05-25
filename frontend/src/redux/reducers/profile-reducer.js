@@ -2,18 +2,49 @@ const ADD_POST = 'ADD-POST';
 const CHANGE_POST_VALUE = 'CHANGE-POST-VALUE';
 const ADD_LIKE = 'ADD-LIKE';
 
-const profileReducer = (state, action) => {
+let initialState = {
+	postData: [ 
+		{
+			id: 1, 
+			text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, sequi?', 
+			likesCount: 2, likesFlag: true
+		}, 
+		{
+			id: 2, 
+			text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore alias ex necessitatibus numquam ducimus consectetur porro nobis magni fuga quia.', 
+			likesCount: 22, likesFlag: true
+		},
+		{
+			id: 3, 
+			text: 'Hi', 
+			likesCount: 10, likesFlag: true
+		},
+	],
+	newPostValue: '',
+}
+
+const profileReducer = (state=initialState, action) => {
 	switch (action.type) {
-		case ADD_POST:
-			let len = state.postData.length + 1;	
-			state.postData.push({id: len, text: state.newPostValue, likesCount: 0, likesFlag: true});
-			state.newPostValue = '';
-			return state;
-		case CHANGE_POST_VALUE:
-			state.newPostValue = action.text;
-			return state;
-		case ADD_LIKE:
-			state.postData.forEach(el => {
+		case ADD_POST: {
+			let len = state.postData.length + 1;
+			return {
+				...state,
+				postData: [...state.postData, {id: len, text: state.newPostValue, likesCount: 0, likesFlag: true}],
+				newPostValue: '',
+			}
+		};
+		case CHANGE_POST_VALUE: {
+			return {
+				...state,
+				newPostValue: action.text
+			};
+		}
+		case ADD_LIKE: {
+			let stateCopy = {
+				...state, 
+				postData: [...state.postData]
+			};	
+			stateCopy.postData.forEach(el => {
 				if(el.id === action.id){
 					if(el.likesFlag){
 						el.likesCount++;
@@ -24,8 +55,9 @@ const profileReducer = (state, action) => {
 					}
 				}
 			});
-			return state;
-	
+
+			return stateCopy;
+		}
 		default:
 			return state;
 	}
