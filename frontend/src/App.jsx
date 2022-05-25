@@ -3,8 +3,9 @@ import './App.css';
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Header from "./Components/Header/Header";
 import Profile from "./Components/Profile/Profile";
-import Friends from "./Components/Friends/Friends";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
+import FriendsContainer from "./Components/Friends/FriendsContainer";
+import UsersContainer from "./Components/Users/UsersContainer";
 
 const App = (props) => {
 	return (
@@ -21,7 +22,10 @@ const App = (props) => {
 						element={<DialogsContainer store={props.store} />}  
 					/>
 					<Route path="/friends" 
-						element={<Friends friendPage={props.state.friendPage} />}
+						element={<FriendsContainer store={props.store} />}
+					/>
+					<Route path="/users" 
+						element={<UsersContainer store={props.store} />}
 					/>
 				</Routes>
 			</div>
