@@ -47,7 +47,7 @@ class Post extends BaseModel
         }
 
         if ($user) {
-            dd($user->first()->userPosts()->get());
+            return $user->first()->userPosts()->get()->toArray();
         }
         return Post::getAll()->toArray();
     }

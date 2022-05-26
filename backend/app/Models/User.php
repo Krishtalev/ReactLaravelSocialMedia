@@ -21,11 +21,25 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     use UserRules;
 
     public array $methods = [
+        "getUsers" => ["type" => "GET", "gates" => []],
+        'addFriend' => ["type" => "POST", "gates" => []],
+        'getFriends' => ["type" => "GET", "gates" => []],
     ];
 
+    public static function getUsers() {
+        return static::getAll()->toArray();
+    }
 
-    public function addFriend() {
-        $currentUser = Auth::user();
+    public static function getFriends(Request $request, $id) {
+        return User::find([$id])->first()->friends()->get()->toArray();
+    }
+
+    public static function addFriend(Request $request, $id) {
+        $currentUserID = Auth::id();
+        if (Friend::where([['user_id','=',$currentUserID],['friend_id','=',$id]])->first()) {
+            return null;
+        }
+        return Friend::create(['user_id'=>$currentUserID,'friend_id'=>$id]);
     }
 
     /**
@@ -72,12 +86,12 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
 
     public function friends()
     {
-        return $this->hasManyThrough();
+        return $this->hasManyThrough(User::class, Friend::class, "user_id","id", "id", "friend_id");
     }
 
     public function dialogs()
     {
-        return $this->hasManyThrough();
+        return $this->hasManyThrough(Dialog::class, DialogUser::class, "user_id","id", "id", "dialog_id");
     }
 
     /**
