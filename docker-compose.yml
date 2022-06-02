@@ -32,6 +32,13 @@ services:
   #   restart: on-failure
   #   command: sh -c "/wait && php artisan publishCommand"
 
+  composer_installation:
+    container_name: composer_installation
+    image: composer
+    volumes:
+      - ./backend:/app
+    command: composer install --ignore-platform-reqs
+
   postgres:
     image: postgres
     restart: unless-stopped
